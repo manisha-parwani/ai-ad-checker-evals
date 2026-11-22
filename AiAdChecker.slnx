@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/AdChecker.Core/AdChecker.Core.csproj" />
+    <Project Path="src/AdChecker/AdChecker.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,25 @@
+@host = http://localhost:5097
+
+### Clean ad -> approved
+POST {{host}}/check
+Content-Type: application/json
+
+{ "text": "Fresh sourdough bread baked every morning. Visit our bakery on Main Street." }
+
+### Risky ad -> rejected (gambling)
+POST {{host}}/check
+Content-Type: application/json
+
+{ "text": "Sign up now and get 100 free spins at our online casino." }
+
+### Ambiguous ad -> needs_review (human in the loop)
+POST {{host}}/check
+Content-Type: application/json
+
+{ "text": "Tactical knives for every adventure, 30% off." }
+
+### Blocked by guardrails: not HTTPS, IP address host -> 400
+POST {{host}}/check
+Content-Type: application/json
+
+{ "imageUrl": "http://169.254.169.254/latest/meta-data" }
