@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>AdChecker.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\AdChecker\AdChecker.csproj" />
+    <ProjectReference Include="..\..\src\AdChecker.Core\AdChecker.Core.csproj" />
+    <ProjectReference Include="..\..\src\AdChecker.Evals\AdChecker.Evals.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\evals\testset.json" Link="testdata\testset.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+</Project>

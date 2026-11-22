@@ -49,7 +49,7 @@ public static class IpAddressRules
             address = address.MapToIPv4();
         }
 
-        if (address.ScopeId != 0 && address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+        if (address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6 && address.ScopeId != 0)
         {
             // Scoped addresses only make sense on a local link.
             return false;

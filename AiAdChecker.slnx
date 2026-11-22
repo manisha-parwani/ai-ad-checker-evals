@@ -4,4 +4,7 @@
     <Project Path="src/AdChecker.Evals/AdChecker.Evals.csproj" />
     <Project Path="src/AdChecker/AdChecker.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/AdChecker.Tests/AdChecker.Tests.csproj" />
+  </Folder>
 </Solution>

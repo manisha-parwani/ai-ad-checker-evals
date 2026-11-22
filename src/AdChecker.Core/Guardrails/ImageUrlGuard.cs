@@ -106,7 +106,7 @@ public sealed class ImageUrlGuard
             return syntax;
         }
 
-        var host = syntax.Url!.IdnHost;
+        var host = NormalizeHost(syntax.Url!.IdnHost);
         IPAddress[] addresses;
         try
         {
