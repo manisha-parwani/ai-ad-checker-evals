@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-test-eval:
+    name: Build, test and eval (fake analyzer)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Test
+        run: dotnet test --no-build --configuration Release --logger "trx;LogFileName=test-results.trx" --results-directory TestResults
+
+      # Runs every case 3 times with the deterministic fake analyzer. No Azure, no secrets.
+      # Exits with code 1 (and fails the build) if any must-pass case fails.
+      - name: Eval (fake analyzer)
+        run: dotnet run --project src/AdChecker.Evals --no-build --configuration Release -- --analyzer fake --runs 3 --report evals/report.md
+
+      - name: Add eval report to the job summary
+        if: always()
+        run: |
+          if [ -f evals/report.md ]; then cat evals/report.md >> "$GITHUB_STEP_SUMMARY"; fi
+
+      - name: Upload eval report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-report
+          path: evals/report.md
+          if-no-files-found: warn
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: TestResults
+          if-no-files-found: warn
