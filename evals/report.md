@@ -9,7 +9,7 @@
 | Test set | `evals/testset.json` (30 text cases, 18 must-pass) |
 | Runs per case | 3 (90 runs in total) |
 | Review threshold | confidence below 0.70 goes to human review |
-| Generated | 2026-11-22 18:21 UTC, took 0.0 s |
+| Generated | 2026-11-22 18:29 UTC, took 0.0 s |
 
 ## Summary
 
