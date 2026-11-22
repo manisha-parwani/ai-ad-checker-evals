@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 
 namespace AdChecker.Core;
 
@@ -18,6 +19,7 @@ public static class JsonDefaults
         {
             ReadCommentHandling = JsonCommentHandling.Skip,
             AllowTrailingCommas = true,
+            TypeInfoResolver = new DefaultJsonTypeInfoResolver(),
         };
         options.Converters.Add(EnumConverter());
         options.MakeReadOnly();
